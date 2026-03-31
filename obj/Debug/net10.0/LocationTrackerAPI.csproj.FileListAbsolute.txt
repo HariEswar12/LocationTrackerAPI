@@ -46,3 +46,4 @@ C:\LocationTrackerAPI\LocationTrackerAPI\obj\Debug\net10.0\refint\LocationTracke
 C:\LocationTrackerAPI\LocationTrackerAPI\obj\Debug\net10.0\LocationTrackerAPI.pdb
 C:\LocationTrackerAPI\LocationTrackerAPI\obj\Debug\net10.0\LocationTrackerAPI.genruntimeconfig.cache
 C:\LocationTrackerAPI\LocationTrackerAPI\obj\Debug\net10.0\ref\LocationTrackerAPI.dll
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net10.0\LocationTrackerAPI.sourcelink.json
