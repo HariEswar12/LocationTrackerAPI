@@ -7,6 +7,13 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // =============================
+// 🔹 PORT CONFIG (Render)
+// =============================
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+
+// =============================
 // 🔹 SERVICES
 // =============================
 
@@ -21,28 +28,20 @@ builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSignalR();
 
 // CORS (React + SignalR)
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowReact",
-//        policy => policy
-//            .WithOrigins("http://localhost:3000")
-//            .AllowAnyHeader()
-//            .AllowAnyMethod()
-//            .AllowCredentials());
-//});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact",
         policy => policy
             .WithOrigins(
                 "http://localhost:3000",               // local
-                "https://your-app.vercel.app"          // production
+                "https://your-app.vercel.app"          // ⚠️ replace later
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
     );
 });
+
 
 // =============================
 // 🔐 JWT AUTHENTICATION
@@ -58,7 +57,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = false; // dev only
+    options.RequireHttpsMetadata = false;
     options.SaveToken = true;
 
     options.TokenValidationParameters = new TokenValidationParameters
@@ -72,16 +71,15 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key),
 
         ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero // 🔥 no delay in token expiry
+        ClockSkew = TimeSpan.Zero
     };
 
-    // 🔥 CRITICAL FOR SIGNALR (JWT via query string)
+    // 🔥 SignalR JWT support
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
         {
             var accessToken = context.Request.Query["access_token"];
-
             var path = context.HttpContext.Request.Path;
 
             if (!string.IsNullOrEmpty(accessToken) &&
@@ -97,26 +95,25 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-// Swagger / OpenAPI
-builder.Services.AddOpenApi();
-var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
-builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
+// =============================
+// 🔹 BUILD APP
+// =============================
 
 var app = builder.Build();
 
+
 // =============================
-// 🔹 MIDDLEWARE PIPELINE
+// 🔹 MIDDLEWARE
 // =============================
 
-// CORS FIRST
 app.UseCors("AllowReact");
 
-// Disable HTTPS in dev (SignalR + localhost issues)
-// app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // optional
 
-// Auth (ORDER IS IMPORTANT)
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 // =============================
 // 🔹 ENDPOINTS
@@ -124,11 +121,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<LocationHub>("/locationHub");
-
-// Swagger (dev only)
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
 app.Run();
