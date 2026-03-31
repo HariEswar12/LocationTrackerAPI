@@ -48,7 +48,8 @@ builder.Services.AddCors(options =>
 // 🔐 JWT AUTHENTICATION
 // =============================
 
-var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new Exception("JWT Key missing");
+var key = Encoding.UTF8.GetBytes(jwtKey);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -98,6 +99,8 @@ builder.Services.AddAuthorization();
 
 // Swagger / OpenAPI
 builder.Services.AddOpenApi();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 var app = builder.Build();
 
