@@ -1,0 +1,9 @@
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.csproj.AssemblyReference.cache
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.AssemblyInfoInputs.cache
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.AssemblyInfo.cs
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.csproj.CoreCompileInputs.cache
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\LocationTrackerAPI\locationtrackerAPI\obj\Debug\net8.0\LocationTrackerAPI.sourcelink.json
