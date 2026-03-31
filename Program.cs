@@ -28,20 +28,32 @@ builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSignalR();
 
 // CORS (React + SignalR)
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowReact",
+//        policy => policy
+//            .WithOrigins(
+//                "http://localhost:3000",               // local
+//                "https://your-app.vercel.app"          // ⚠️ replace later
+//            )
+//            .AllowAnyHeader()
+//            .AllowAnyMethod()
+//            .AllowCredentials()
+//    );
+//});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact",
         policy => policy
             .WithOrigins(
-                "http://localhost:3000",               // local
-                "https://your-app.vercel.app"          // ⚠️ replace later
+                "http://localhost:3000",
+                "https://frontend-fwsr.onrender.com" // 🔥 your actual frontend
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
     );
 });
-
 
 // =============================
 // 🔐 JWT AUTHENTICATION
